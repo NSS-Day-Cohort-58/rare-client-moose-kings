@@ -13,7 +13,7 @@ return <>
     <Link className="level-item" to={`/posts/${id}`} >{title}</Link>
     </div>
     <div className="column level">
-<div className="level-item">{fullname} {authorLastName}</div>
+<div className="level-item">{fullname}</div>
     </div>
     <div className="column level">
 <div className="level-item">{publicationDate}</div>

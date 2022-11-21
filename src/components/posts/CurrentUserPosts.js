@@ -4,11 +4,11 @@ import { getAllPosts, getPostByUserId } from "../../managers/PostManager"
 import { deletePost } from "../../managers/PostManager"
 
 export const ViewCurrentUserPost = ({token}) => {
-  
+
   const [posts, setPost] = useState([]);
 
   useEffect(() => {
-    getAllPosts().then((postData) => setPost(postData));
+    getPostByUserId(token).then((postData) => setPost(postData))
   }, []);
 
     useEffect (() => {
@@ -22,7 +22,10 @@ export const ViewCurrentUserPost = ({token}) => {
 
     const deletePostButton = (postid) => {
         return <>
-        <button className="button is-small is-danger is-focused"
+        {
+          posts.map((post) => {
+            if (post.user.tokenNumber === token) {
+              return <button className="button is-small is-danger is-focused"
         onClick={() => {
             if (window.confirm('Are you sure you want to delete this post?')) {
                 makeDeleteRequest(postid)
@@ -31,8 +34,12 @@ export const ViewCurrentUserPost = ({token}) => {
         >
           <i className="fa-solid fa-trash-can"></i>
         </button>
+            } else {
+              return ""
+            }
+          })
+        }
       </>
-    
   };
 
   const makeDeleteRequest = (postid) => {

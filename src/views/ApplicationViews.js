@@ -3,7 +3,6 @@ import { Login } from "../components/auth/Login"
 import { Register } from "../components/auth/Register"
 import { SubscribedPosts } from "../components/posts/SubscribedPosts"
 import { TagList } from "../components/tag/TagList"
-import { AllPostsContainer } from "../components/posts/allPostsContainer"
 import { Authorized } from "./Authorized"
 import { ViewCurrentUserPost } from "../components/posts/CurrentUserPosts"
 import { PostForm } from "../components/posts/PostForm"
@@ -17,6 +16,7 @@ import { UserList } from "../components/users/UserList"
 import { UserDetails } from "../components/users/UserDetails"
 import { MakeComment } from "../components/posts/makeComment"
 import { EditComment } from "../components/posts/editComment"
+import { AllPosts } from "../components/posts/allposts"
 import { ReactionList } from "../components/reactions/ReactionList"
 import { ReactionEdit } from "../components/reactions/ReactionEdit"
 
@@ -35,9 +35,9 @@ export const ApplicationViews = ({ token, setToken }) => {
       <Route path="/register" element={<Register setToken={setToken} />}  />
       <Route element={<Authorized token={token} />} />
       <Route path="/" element={< SubscribedPosts token={token}/>}/>
-      <Route path="/allposts" element={<AllPostsContainer />} />
+      <Route path="/allposts" element={<AllPosts token={token} />} />
       <Route path="/myposts" element={<ViewCurrentUserPost token={token} />} />
-      <Route path="/posts/:postId" element={<PostDetails />} />
+      <Route path="/posts/:postId" element={<PostDetails token={token} />} />
       <Route path="/posts/:postId/comments" element={<PostComments token={token}/>} />
       <Route path="/posts/:postId/newComment" element={<MakeComment token={token}/>} />
       <Route path="/comment/:commentId/editcomment" element={<EditComment token={token}/>} />

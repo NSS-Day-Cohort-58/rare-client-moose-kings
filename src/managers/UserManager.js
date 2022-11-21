@@ -15,7 +15,7 @@ export const getUserById = (id) => {
     })
         .then(res => res.json())
     }
-    
+
 export const addUser = user => {
 return fetch("http://localhost:8000/users", {
     method: "POST",
