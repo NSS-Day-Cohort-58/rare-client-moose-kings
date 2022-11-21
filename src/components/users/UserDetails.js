@@ -106,6 +106,7 @@ export const UserDetails = ({ token }) => {
                                         </p>
                                         <p className="subtitle is-6">Email: {user?.user?.email}</p>
                                         <p className="subtitle is-6">Date Joined: {user?.user?.date_joined}</p>
+                                        <p className="subtitle is-6">Users sub count: {user?.sub_count}</p>
                                     </div>
                                     <div>
                                         {
