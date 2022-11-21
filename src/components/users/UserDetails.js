@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { addSubscription, endSubscription, getAllSubscriptions } from "../../managers/SubscriptionManager"
 import { getUserById } from "../../managers/UserManager"
+import { getPostByUserId } from "../../managers/PostManager"
 
 
 
@@ -15,6 +16,10 @@ export const UserDetails = ({ token }) => {
 
     useEffect(() => {
         getUserById(userId).then((userData) => setUser(userData))
+    }, [userId])
+
+    useEffect(() => {
+        getPostByUserId(userId).then((userData) => setUser(userData))
     }, [userId])
 
     const refreshSubscriptions = () => {
@@ -78,6 +83,12 @@ export const UserDetails = ({ token }) => {
             else if (!foundSub) {
                 return subscribeButton()
             }
+    }
+
+    const renderPostsForUser = () => {
+        return <>
+        
+        </>
     }
 
     return <>
