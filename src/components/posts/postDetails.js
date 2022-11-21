@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getPostById,
-  updatePost,
   deletePost,
   getAllReactions,
 } from "../../managers/PostManager";

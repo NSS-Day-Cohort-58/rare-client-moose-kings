@@ -17,14 +17,18 @@ import { UserList } from "../components/users/UserList"
 import { UserDetails } from "../components/users/UserDetails"
 import { MakeComment } from "../components/posts/makeComment"
 import { EditComment } from "../components/posts/editComment"
+import { ReactionList } from "../components/reactions/ReactionList"
+import { ReactionEdit } from "../components/reactions/ReactionEdit"
 
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
     <Routes>
       <Route path="/tags" element={<TagList />} />
+      <Route path="/reactions" element={<ReactionList />} />
       <Route path="/categories/:categoryId/edit" element={<CategoryEdit />} />
       <Route path="/tags/:TagId/edit" element={<TagEdit />} />
+      <Route path="/reactions/:reactionId/edit" element={<ReactionEdit />} />
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/postform" element={<PostForm token={token} />} />
       <Route path="/login" element={<Login setToken={setToken} />}  />
