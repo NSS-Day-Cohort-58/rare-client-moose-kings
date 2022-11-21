@@ -13,8 +13,12 @@ export const UserDetails = ({ token }) => {
     const [subscriptions, setSubscriptions] = useState([])
     const { userId } = useParams()
 
-    useEffect(() => {
+    const refreshUserData = () => {
         getUserById(userId).then((userData) => setUser(userData))
+    }
+
+    useEffect(() => {
+        refreshUserData()
     }, [userId])
 
     const refreshSubscriptions = () => {
@@ -43,6 +47,7 @@ export const UserDetails = ({ token }) => {
                                 ended_on: ""
                             }
                         ).then(() => refreshSubscriptions())
+                        .then(() => refreshUserData())
                     }}>
                 Unsubscribe
             </button>
@@ -62,6 +67,7 @@ export const UserDetails = ({ token }) => {
                             ended_on: null
                         })
                             .then(() => refreshSubscriptions())
+                            .then(() => refreshUserData())
                     }
                 }>
                 Subscribe
