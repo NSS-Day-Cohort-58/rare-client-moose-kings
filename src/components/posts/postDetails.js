@@ -90,7 +90,7 @@ export const PostDetails = () => {
                   </div>
                 </div>
                 <div className="column is-one-third">
-                  <div className="title is-5 level-item">Reactions</div>
+                  <div className="title is-5 level-item">Reactionssss</div>
                   <div className="box">
                     <div>
                       {reactions.map((reaction) => {
@@ -122,16 +122,9 @@ export const PostDetails = () => {
                       })}
                     </div>
                   </div>
-                  <button className="button is-primary">
-                    <Link to={`/posts/${postId}/comments`}>
-                      View Post Comments
-                    </Link>
-                  </button>
                 </div>
               </div>
               <div className="column is-one-third">
-                <div className="title is-5 level-item">Reactions</div>
-                <div className="box">{post?.reaction?.emoji}</div>
                 <button className="button is-primary">
                   <Link to={`/posts/${postId}/comments`}>View Post Comments</Link></button>
                   <button className="button is-primary">
