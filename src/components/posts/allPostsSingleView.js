@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom"
 
 
 // This component is responsible for rendering the individual view for each post. Props are passed from the AllPosts component using object deconstruction.
-export const AllPostsSingleView = ({title, publicationDate, authorFirstName, authorLastName, category, tag, id, fullname}) => {
+export const AllPostsSingleView = ({title, publicationDate, authorFirstName, authorLastName, category, tag, id, fullname, tags}) => {
     // const {post_id} = useParams()
 return <>
 <section>

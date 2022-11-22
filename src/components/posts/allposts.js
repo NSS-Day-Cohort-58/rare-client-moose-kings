@@ -133,6 +133,7 @@ export const AllPosts = ({searchTermState}) => {
             authorFirstName={post.user.first_name}
             authorLastName={post.user.last_name}
             category={post.category.label}
+            tags={post.tags}
             fullname={post.user.full_name}
             id= {post.id}
             />

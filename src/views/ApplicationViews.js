@@ -19,6 +19,7 @@ import { EditComment } from "../components/posts/editComment"
 import { AllPosts } from "../components/posts/allposts"
 import { ReactionList } from "../components/reactions/ReactionList"
 import { ReactionEdit } from "../components/reactions/ReactionEdit"
+import { ViewPostsForTagList } from "../components/tag/PostsForTagList"
 
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -44,6 +45,7 @@ export const ApplicationViews = ({ token, setToken }) => {
       <Route path="/posts/:postId/edit" element={<UpdatePostForm token={token} />} />
       <Route path="/users" element={<UserList token={token} />} />
       <Route path="/users/:userId/details" element={<UserDetails token={token} />} />
+      <Route path="/tags/:taglabel" element={<ViewPostsForTagList token={token} />} />
 
     </Routes>
   </>
