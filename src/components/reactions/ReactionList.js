@@ -22,9 +22,9 @@ export const ReactionList = () => {
         <div className="container">
           <div className="columns">
             <div className="column">
-              <h1 class="title is-3">Reactions</h1>
+              <h1 className="title is-3">Reactions</h1>
               <section className="section">
-                <article className="reactionList">
+                <article className="reactions">
                   {reactions.map((reaction) => {
                     return <Reaction reaction={reaction} />;
                   })}
@@ -32,7 +32,7 @@ export const ReactionList = () => {
               </section>
             </div>
             <div className="column is-two-fifths">
-              <div class="box">
+              <div className="box">
                 {" "}
                 <>
                   <ReactionForm getReactions={getReactions} />
