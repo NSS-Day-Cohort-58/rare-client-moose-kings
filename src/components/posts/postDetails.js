@@ -15,8 +15,7 @@ export const PostDetails = () => {
   const [reactions, setReactions] = useState([]);
   const [reactionCount, setReactionCount] = useState({})
   
-
-  useEffect(() => {
+  const resetReactionCount = () => {
     getPostById(postId).then((postData) => setPost(postData));
     fetch(`http://localhost:8000/postreactions?postId=${postId}`, {
       headers: {
@@ -25,6 +24,11 @@ export const PostDetails = () => {
     })
     .then((res) => res.json())
     .then(setReactionCount)
+  }
+
+
+  useEffect(() => {
+      resetReactionCount()
   }, [postId]);
 
   useEffect(() => {
@@ -121,7 +125,7 @@ export const PostDetails = () => {
                                     post_id: postId,
                                     reaction_id: reaction.id
                                   })
-                                })
+                                }).then(resetReactionCount)
                               }}
                             >
                               {reaction.emoji}({reactionCount[reaction.id]})
