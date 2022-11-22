@@ -19,6 +19,7 @@ import { EditComment } from "../components/posts/editComment"
 import { AllPosts } from "../components/posts/allposts"
 import { ReactionList } from "../components/reactions/ReactionList"
 import { ReactionEdit } from "../components/reactions/ReactionEdit"
+import { ViewPostsForTagList } from "../components/tag/PostsForTagList"
 
 
 export const ApplicationViews = ({ token, setToken, loggedInUser }) => {
@@ -37,13 +38,14 @@ export const ApplicationViews = ({ token, setToken, loggedInUser }) => {
       <Route path="/" element={< SubscribedPosts token={token}/>}/>
       <Route path="/allposts" element={<AllPosts token={token} />} />
       <Route path="/myposts" element={<ViewCurrentUserPost token={token} />} />
-      <Route path="/posts/:postId" element={<PostDetails token={token} />} />
+      <Route path="/posts/:postId" element={<PostDetails token={token} loggedInUser={loggedInUser} />} />
       <Route path="/posts/:postId/comments" element={<PostComments token={token}/>} />
       <Route path="/posts/:postId/newComment" element={<MakeComment token={token}/>} />
       <Route path="/comment/:commentId/editcomment" element={<EditComment token={token}/>} />
       <Route path="/posts/:postId/edit" element={<UpdatePostForm token={token} />} />
       <Route path="/users" element={<UserList token={token} loggedInUser={loggedInUser}/>} />
       <Route path="/users/:userId/details" element={<UserDetails token={token} />} />
+      <Route path="/tags/:tagid" element={<ViewPostsForTagList token={token} />} />
 
     </Routes>
   </>

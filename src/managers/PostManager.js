@@ -25,6 +25,15 @@ return fetch(`http://localhost:8000/posts?title=${searched}`, {
     .then(res => res.json())
 }
 
+export const getAllPostsByTag = (tagId) => {
+return fetch(`http://localhost:8000/posts?tag=${tagId}`, {
+    headers:{
+        "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+})
+    .then(res => res.json())
+}
+
 export const getAllPostsByCategory = (categoryId) => {
     if (categoryId === 0) {
         return fetch("http://localhost:8000/posts", {
