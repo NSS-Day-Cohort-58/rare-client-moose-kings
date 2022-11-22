@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { AllPostsSingleView } from "./allPostsSingleView";
-import { getAllPosts, getAllPostsByCategory, getAllPostsByTitleSearch } from "../../managers/PostManager";
+import { getAllPosts, getAllPostsByCategory, getAllPostsByTitleSearch, getApprovedPosts, getUnapprovedPosts } from "../../managers/PostManager";
 import { getAllCategories } from "../../managers/CategoryManager";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,7 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 // This component is responsible for rendering all posts. The user will have the ability to navigate to create a new post, as well as search posts by title.
 export const AllPosts = ({searchTermState}) => {
     const[allPosts, setAllPosts] = useState([])
-    const[filteredPosts, setSearched] = useState([])
+    // const[filteredPosts, setSearched] = useState([])
+    const[unapprovedPosts, setUnapprovedPosts] = useState([])
+    const[approvedPosts, setApprovedPosts] = useState([])
     const[searchedTitle, setSearchedTitle] = useState("")
     const[categories, setCategories] = useState([])
     const[currentCategory, setCurrentCategory] = useState({
@@ -18,15 +20,28 @@ export const AllPosts = ({searchTermState}) => {
     const navigate = useNavigate()
 
     // This useEffect hook fetches the full array of posts.
-    useEffect(() => {
+  useEffect(() => {
     getAllPosts()
       .then((allPostsArray) => {
         setAllPosts(allPostsArray);
       });
   }, []);
+    
+  useEffect(() => {
+    getUnapprovedPosts()
+      .then((unapprovedPostsArray) => {
+        setUnapprovedPosts(unapprovedPostsArray);
+      });
+  }, []);
+  
+  useEffect(() => {
+    getApprovedPosts()
+      .then((approvedPostsArray) => {
+        setApprovedPosts(approvedPostsArray);
+      });
+  }, []);
 
-
-    useEffect(() => {
+  useEffect(() => {
     getAllCategories()
       .then((categoriesArray) => {
         setCategories(categoriesArray);
@@ -124,8 +139,24 @@ export const AllPosts = ({searchTermState}) => {
 
     return (
       <>
+            <h2>Unapproved</h2>
           <section className="box">
-            {allPosts.map((post) => (
+            {unapprovedPosts.map((post) => (
+            <AllPostsSingleView
+            key={`post--${post.id}`}
+            title={post.title}
+            publicationDate={post.publication_date}
+            authorFirstName={post.user.first_name}
+            authorLastName={post.user.last_name}
+            category={post.category.label}
+            fullname={post.user.full_name}
+            id= {post.id}
+            />
+            ))}
+          </section>
+          <h2>Approved</h2>
+          <section className="box">
+            {approvedPosts.map((post) => (
             <AllPostsSingleView
             key={`post--${post.id}`}
             title={post.title}

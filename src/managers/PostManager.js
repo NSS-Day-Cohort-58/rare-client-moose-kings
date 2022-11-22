@@ -102,3 +102,19 @@ export const getSubscribedPosts = (token) => {
     })
         .then(res => res.json())
     }
+
+export const getUnapprovedPosts = () => {
+        return fetch(`http://localhost:8000/posts?approved=False`, {
+    headers:{
+        "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+})
+    .then(res => res.json())}
+
+export const getApprovedPosts = () => {
+        return fetch(`http://localhost:8000/posts?approved=True`, {
+    headers:{
+        "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+})
+    .then(res => res.json())}

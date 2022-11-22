@@ -13,18 +13,9 @@ export const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState([]);
   const [reactions, setReactions] = useState([]);
-  const [reactionCount, setReactionCount] = useState({})
   
-
   useEffect(() => {
     getPostById(postId).then((postData) => setPost(postData));
-    fetch(`http://localhost:8000/postreactions?postId=${postId}`, {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("auth_token")}`,
-      },
-    })
-    .then((res) => res.json())
-    .then(setReactionCount)
   }, [postId]);
 
   useEffect(() => {
@@ -99,7 +90,7 @@ export const PostDetails = () => {
                   </div>
                 </div>
                 <div className="column is-one-third">
-                  <div className="title is-5 level-item">Reactions</div>
+                  <div className="title is-5 level-item">Reactionssss</div>
                   <div className="box">
                     <div>
                       {reactions.map((reaction) => {
@@ -124,7 +115,7 @@ export const PostDetails = () => {
                                 })
                               }}
                             >
-                              {reaction.emoji}({reactionCount[reaction.id]})
+                              {reaction.emoji}
                             </button>
                           </>
                         );

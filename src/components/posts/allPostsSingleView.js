@@ -22,6 +22,8 @@ return <>
 <span className="level-item">{category}</span>
     </div>
 </div>
+<button>Approve</button>
+<button>Reject</button>
 
 </section>
 </>
