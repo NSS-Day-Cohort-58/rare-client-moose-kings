@@ -3,15 +3,13 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { addSubscription, endSubscription, getAllSubscriptions } from "../../managers/SubscriptionManager"
 import { getUserById } from "../../managers/UserManager"
-import { getPostByUserId } from "../../managers/PostManager"
-
-
+import { getAllPosts, getPostByUserId } from "../../managers/PostManager"
 
 
 export const UserDetails = ({ token }) => {
-
     const [user, setUser] = useState({})
     const [subscriptions, setSubscriptions] = useState([])
+    const [posts, setPosts] = useState([])
     const { userId } = useParams()
 
     const refreshUserData = () => {
@@ -22,9 +20,14 @@ export const UserDetails = ({ token }) => {
         refreshUserData()
     }, [userId])
 
+    // useEffect(() => {
+    //     getPostByUserId(user?.tokenNumber).then((userData) => setUserPosts(userData))
+    // }, [userId])
+
     useEffect(() => {
-        getPostByUserId(userId).then((userData) => setUser(userData))
-    }, [userId])
+        getAllPosts().then((postData) => setPosts(postData))
+    }, [])
+
 
     const refreshSubscriptions = () => {
         getAllSubscriptions().then((subscriptionsFromAPI) => {
@@ -37,6 +40,9 @@ export const UserDetails = ({ token }) => {
     }, [])
 
     const foundSub = subscriptions?.find(subscription => subscription.follower.tokenNumber === token && subscription.author === user.id && subscription.ended_on === null)
+
+    const userPosts = posts?.filter(post => post?.user?.tokenNumber === user?.tokenNumber )
+
 
     const unsubscribeButton = () => {
         return <>
@@ -93,7 +99,23 @@ export const UserDetails = ({ token }) => {
 
     const renderPostsForUser = () => {
         return <>
-        
+        <div>
+        {
+            userPosts.map(post => {
+            return <div key={`post--${post.id}`}>
+                <div className="card">
+                    <div>
+                {post.title}
+                    </div>
+                {post.content}
+                </div>
+                <br></br>
+                <br></br>
+                <br></br>
+                </div>
+            })
+        }
+        </div>
         </>
     }
 
@@ -138,6 +160,11 @@ export const UserDetails = ({ token }) => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+        <div>
+        {renderPostsForUser()}
+        </div>
         </div>
     </>
 }
