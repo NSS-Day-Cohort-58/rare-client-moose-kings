@@ -25,7 +25,7 @@ export const UserList = ({ loggedInUser }) => {
     const makeAdminButton = (user) => {
         return <>
             {
-                loggedInUser.user.is_staff
+                loggedInUser?.user
                     ? <button
                         onClick={
                             () => {
@@ -34,7 +34,8 @@ export const UserList = ({ loggedInUser }) => {
                                         id: user.id,
                                         bio: user.bio,
                                         profile_image_url: user.profile_image_url,
-                                        is_staff: 1
+                                        is_staff: 1,
+                                        is_active: user.user.is_active
                                     }
                                 ).then(() => getUsers())
                             }
@@ -49,7 +50,7 @@ export const UserList = ({ loggedInUser }) => {
     const removeAdminButton = (user) => {
         return <>
             {
-                loggedInUser.user.is_staff
+                loggedInUser?.user
                     ? <button
                         onClick={
                             () => {
@@ -58,7 +59,8 @@ export const UserList = ({ loggedInUser }) => {
                                         id: user.id,
                                         bio: user.bio,
                                         profile_image_url: user.profile_image_url,
-                                        is_staff: 0
+                                        is_staff: 0,
+                                        is_active: user.user.is_active
                                     }
                                 ).then(() => getUsers())
                             }
@@ -73,7 +75,7 @@ export const UserList = ({ loggedInUser }) => {
     const makeActiveButton = (user) => {
         return <>
             {
-                loggedInUser.user.is_staff
+                loggedInUser?.user?.is_staff
                     ? <button
                         onClick={
                             () => {
@@ -98,7 +100,7 @@ export const UserList = ({ loggedInUser }) => {
     const makeInactiveButton = (user) => {
         return <>
             {
-                loggedInUser.user.is_staff
+                loggedInUser?.user?.is_staff
                     ? <button
                         onClick={
                             () => {

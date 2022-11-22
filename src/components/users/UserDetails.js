@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { addSubscription, endSubscription, getAllSubscriptions } from "../../managers/SubscriptionManager"
 import { getUserById } from "../../managers/UserManager"
 import { getAllPosts, getPostByUserId } from "../../managers/PostManager"
@@ -20,9 +20,6 @@ export const UserDetails = ({ token }) => {
     refreshUserData();
   }, [userId]);
 
-    // useEffect(() => {
-    //     getPostByUserId(user?.tokenNumber).then((userData) => setUserPosts(userData))
-    // }, [userId])
 
     useEffect(() => {
         getAllPosts().then((postData) => setPosts(postData))
@@ -106,11 +103,19 @@ export const UserDetails = ({ token }) => {
         {
             userPosts.map(post => {
             return <div key={`post--${post.id}`}>
-                <div className="card">
+                <div className="level">
+                    <div className="columns level-item">
+                <div className="card column is-half ">
+                    <div className="card-image">
+<img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"></img>
+                    </div>
                     <div>
-                {post.title}
+                        <Link to={`/posts/${post.id}`}>{post.title}</Link>
+
                     </div>
                 {post.content}
+                </div>
+                </div>
                 </div>
                 <br></br>
                 <br></br>
@@ -164,14 +169,10 @@ export const UserDetails = ({ token }) => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
         <div>
         <div>
         {renderPostsForUser()}
         </div>
         </div>
-    </>
-  );
+    </>;
 };

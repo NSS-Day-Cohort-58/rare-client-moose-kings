@@ -14,7 +14,7 @@ const navigate = useNavigate()
             <div>
             <button
                 onClick={() => {
-    navigate(`/tags/${tag.label}`)}}
+    navigate(`/tags/${tag.id}`)}}
             >
                 View All {tag.label} Posts
             </button>
