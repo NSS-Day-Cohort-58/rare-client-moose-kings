@@ -45,6 +45,21 @@ export const PostDetails = () => {
     });
   };
 
+  const renderTagsForPost = () => {
+    return <>
+    <div className="">
+      {
+        post?.tags?.map(tag => {
+          return <>
+          <div>{tag.label}</div>
+          <br></br>
+          </>
+        })
+      }
+      </div>
+    </>
+  }
+
   const displayPostDetailsCard = () => {
     return (
       <>
@@ -153,7 +168,7 @@ export const PostDetails = () => {
             <div className="level">
               <h3 className="title is-5 level-item">Tags</h3>
             </div>
-            <div className="level-item">{post?.tag?.label}</div>
+            {renderTagsForPost()}
           </div>
         </section>
       </>
