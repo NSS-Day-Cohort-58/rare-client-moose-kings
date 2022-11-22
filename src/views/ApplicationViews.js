@@ -21,7 +21,7 @@ import { ReactionList } from "../components/reactions/ReactionList"
 import { ReactionEdit } from "../components/reactions/ReactionEdit"
 
 
-export const ApplicationViews = ({ token, setToken }) => {
+export const ApplicationViews = ({ token, setToken, loggedInUser }) => {
   return <>
     <Routes>
       <Route path="/tags" element={<TagList />} />
@@ -42,7 +42,7 @@ export const ApplicationViews = ({ token, setToken }) => {
       <Route path="/posts/:postId/newComment" element={<MakeComment token={token}/>} />
       <Route path="/comment/:commentId/editcomment" element={<EditComment token={token}/>} />
       <Route path="/posts/:postId/edit" element={<UpdatePostForm token={token} />} />
-      <Route path="/users" element={<UserList token={token} />} />
+      <Route path="/users" element={<UserList token={token} loggedInUser={loggedInUser}/>} />
       <Route path="/users/:userId/details" element={<UserDetails token={token} />} />
 
     </Routes>

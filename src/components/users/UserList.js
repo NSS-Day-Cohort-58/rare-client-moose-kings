@@ -1,24 +1,128 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { getAllUsers } from "../../managers/UserManager"
+import { getAllUsers, updateUser } from "../../managers/UserManager"
 
 
-export const UserList = () => {
+export const UserList = ({ loggedInUser }) => {
 
     const [users, setUsers] = useState([])
 
+    const getUsers = () => {
+        getAllUsers().then((usersFromAPI) => {
+            setUsers(usersFromAPI)
+        }
+        )
+    }
+
     useEffect(
         () => {
-            getAllUsers().then((usersFromAPI) => {
-                setUsers(usersFromAPI)
-            }
-            )
+            getUsers()
         }, [])
 
 
+
+    const makeAdminButton = (user) => {
+        return <>
+            {
+                loggedInUser.user.is_staff
+                    ? <button
+                        onClick={
+                            () => {
+                                updateUser(
+                                    {
+                                        id: user.id,
+                                        bio: user.bio,
+                                        profile_image_url: user.profile_image_url,
+                                        is_staff: 1
+                                    }
+                                ).then(() => getUsers())
+                            }
+                        }>
+                        Make Admin
+                    </button>
+                    : ""
+            }
+        </>
+
+    }
+    const removeAdminButton = (user) => {
+        return <>
+            {
+                loggedInUser.user.is_staff
+                    ? <button
+                        onClick={
+                            () => {
+                                updateUser(
+                                    {
+                                        id: user.id,
+                                        bio: user.bio,
+                                        profile_image_url: user.profile_image_url,
+                                        is_staff: 0
+                                    }
+                                ).then(() => getUsers())
+                            }
+                        }>
+                        Remove Admin
+                    </button>
+                    : ""
+            }
+        </>
+
+    }
+    const makeActiveButton = (user) => {
+        return <>
+            {
+                loggedInUser.user.is_staff
+                    ? <button
+                        onClick={
+                            () => {
+                                updateUser(
+                                    {
+                                        id: user.id,
+                                        bio: user.bio,
+                                        profile_image_url: user.profile_image_url,
+                                        is_staff: user.user.is_staff,
+                                        is_active: 1
+                                    }
+                                ).then(() => getUsers())
+                            }
+                        }>
+                        Activate
+                    </button>
+                    : ""
+            }
+        </>
+
+    }
+    const makeInactiveButton = (user) => {
+        return <>
+            {
+                loggedInUser.user.is_staff
+                    ? <button
+                        onClick={
+                            () => {
+                                updateUser(
+                                    {
+                                        id: user.id,
+                                        bio: user.bio,
+                                        profile_image_url: user.profile_image_url,
+                                        is_staff: user.user.is_staff,
+                                        is_active: 0
+                                    }
+                                ).then(() => getUsers())
+                            }
+                        }>
+                        Deactivate
+                    </button>
+                    : ""
+            }
+        </>
+
+    }
+
     return <>
-        <h1 className="title is-1 level-item">All Users</h1>
+        <h1 className="title is-1 level-item">Active Users</h1>
         {
             users?.map(user =>
                 <div className="my-4" key={`user--${user.id}`}>
@@ -30,7 +134,7 @@ export const UserList = () => {
                                         <div className="media">
                                             <div className="media-content">
                                                 <Link to={`${user.id}/details`}>
-                                                <p className="title is-4">{user.full_name}</p>
+                                                    <p className="title is-4">{user.full_name}</p>
                                                 </Link>
                                                 <div>
                                                     <p className="subtitle is-6">@{user.user.username}</p>
@@ -42,6 +146,17 @@ export const UserList = () => {
 
                                                         }</p>
                                                 </div>
+                                                {
+                                                    user.user.is_staff
+                                                        ? removeAdminButton(user)
+                                                        : makeAdminButton(user)
+                                                }
+                                                {
+                                                    user.user.is_active
+                                                        ? makeInactiveButton(user)
+                                                        : makeActiveButton(user)
+                                                }
+
                                             </div>
                                         </div>
                                     </div>
