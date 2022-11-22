@@ -12,13 +12,13 @@ export const UserDetails = ({ token }) => {
     const [posts, setPosts] = useState([])
     const { userId } = useParams()
 
-    const refreshUserData = () => {
-        getUserById(userId).then((userData) => setUser(userData))
-    }
+  const refreshUserData = () => {
+    getUserById(userId).then((userData) => setUser(userData));
+  };
 
-    useEffect(() => {
-        refreshUserData()
-    }, [userId])
+  useEffect(() => {
+    refreshUserData();
+  }, [userId]);
 
     // useEffect(() => {
     //     getPostByUserId(user?.tokenNumber).then((userData) => setUserPosts(userData))
@@ -35,11 +35,16 @@ export const UserDetails = ({ token }) => {
         })
     }
 
-    useEffect(() => {
-        refreshSubscriptions()
-    }, [])
+  useEffect(() => {
+    refreshSubscriptions();
+  }, []);
 
-    const foundSub = subscriptions?.find(subscription => subscription.follower.tokenNumber === token && subscription.author === user.id && subscription.ended_on === null)
+  const foundSub = subscriptions?.find(
+    (subscription) =>
+      subscription.follower.tokenNumber === token &&
+      subscription.author === user.id &&
+      subscription.ended_on === null
+  );
 
     const userPosts = posts?.filter(post => post?.user?.tokenNumber === user?.tokenNumber )
 
@@ -66,36 +71,34 @@ export const UserDetails = ({ token }) => {
         </>
     }
 
-    const subscribeButton = () => {
-        return <>
-            <button
-                onClick={
-                    () => {
-                        addSubscription({
-                            follower: token,
-                            author: user.id,
-                            created_on: "",
-                            ended_on: null
-                        })
-                            .then(() => refreshSubscriptions())
-                            .then(() => refreshUserData())
-                    }
-                }>
-                Subscribe
-            </button>
-        </>
+  const subscribeButton = () => {
+    return (
+      <>
+        <button
+          onClick={() => {
+            addSubscription({
+              follower: token,
+              author: user.id,
+              created_on: "",
+              ended_on: null,
+            })
+              .then(() => refreshSubscriptions())
+              .then(() => refreshUserData());
+          }}
+        >
+          Subscribe
+        </button>
+      </>
+    );
+  };
 
+  const subscribedOrUnsubscribedButton = () => {
+    if (foundSub) {
+      return unsubscribeButton();
+    } else if (!foundSub) {
+      return subscribeButton();
     }
-
-
-    const subscribedOrUnsubscribedButton = () => {
-            if (foundSub) {
-                return unsubscribeButton()
-            }
-            else if (!foundSub) {
-                return subscribeButton()
-            }
-    }
+  };
 
     const renderPostsForUser = () => {
         return <>
@@ -158,8 +161,11 @@ export const UserDetails = ({ token }) => {
                             </div>
                         </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
         <div>
         <div>
@@ -167,4 +173,5 @@ export const UserDetails = ({ token }) => {
         </div>
         </div>
     </>
-}
+  );
+};

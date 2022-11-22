@@ -17,15 +17,15 @@ export const ReactionForm = ({ getReactions }) => {
 
   return (
     <form className="reactionForm">
-      <h1 class="title is-3">Create a new reaction</h1>
+      <h1 className="title is-3">Create a new reaction</h1>
 
       <div className="field">
-        <label class="label is-medium" htmlFor="reactionLabel">
+        <label className="label is-medium" htmlFor="reactionLabel">
           Reaction Text:{" "}
         </label>
         <div className="control">
           <input
-            class="input is-medium"
+            className="input is-medium"
             type="text"
             id="reactionLabel"
             ref={label}
@@ -36,12 +36,12 @@ export const ReactionForm = ({ getReactions }) => {
         </div>
       </div>
       <div className="field">
-        <label class="label is-medium" htmlFor="reactionEmoji">
+        <label className="label is-medium" htmlFor="reactionEmoji">
           Reaction Emoji:{" "}
         </label>
         <div className="control">
           <input
-            class="input is-medium"
+            className="input is-medium"
             type="text"
             id="reactionEmoji"
             ref={emoji}

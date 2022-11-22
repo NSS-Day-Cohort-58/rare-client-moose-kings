@@ -13,9 +13,18 @@ export const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState([]);
   const [reactions, setReactions] = useState([]);
+  const [reactionCount, setReactionCount] = useState({})
   
+
   useEffect(() => {
     getPostById(postId).then((postData) => setPost(postData));
+    fetch(`http://localhost:8000/postreactions?postId=${postId}`, {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      },
+    })
+    .then((res) => res.json())
+    .then(setReactionCount)
   }, [postId]);
 
   useEffect(() => {
@@ -130,23 +139,16 @@ export const PostDetails = () => {
                                 })
                               }}
                             >
-                              {reaction.emoji}
+                              {reaction.emoji}({reactionCount[reaction.id]})
                             </button>
                           </>
                         );
                       })}
                     </div>
                   </div>
-                  <button className="button is-primary">
-                    <Link to={`/posts/${postId}/comments`}>
-                      View Post Comments
-                    </Link>
-                  </button>
                 </div>
               </div>
               <div className="column is-one-third">
-                <div className="title is-5 level-item">Reactions</div>
-                <div className="box">{post?.reaction?.emoji}</div>
                 <button className="button is-primary">
                   <Link to={`/posts/${postId}/comments`}>View Post Comments</Link></button>
                   <button className="button is-primary">

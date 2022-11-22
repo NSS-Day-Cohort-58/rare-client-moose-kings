@@ -27,10 +27,11 @@ return fetch("http://localhost:8000/users", {
 }
 
 export const updateUser = user => {
-return fetch(`http://localhost:8000/users/${user.id}`, {
+return fetch(`http://localhost:8000/rareusers/${user.id}`, {
     method: "PUT",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("auth_token")}`
     },
     body: JSON.stringify(user)
 })
