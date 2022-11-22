@@ -2,6 +2,8 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { getAllUsers, updateUser } from "../../managers/UserManager"
+import { AuthorUsers } from "./AuthorUsers"
+import { StaffUsers } from "./StaffUsers"
 
 
 export const UserList = ({ loggedInUser }) => {
@@ -25,7 +27,7 @@ export const UserList = ({ loggedInUser }) => {
     const makeAdminButton = (user) => {
         return <>
             {
-                loggedInUser?.user
+                loggedInUser?.user?.is_staff
                     ? <button
                         onClick={
                             () => {
@@ -35,7 +37,7 @@ export const UserList = ({ loggedInUser }) => {
                                         bio: user.bio,
                                         profile_image_url: user.profile_image_url,
                                         is_staff: 1,
-                                        is_active: user.user.is_active
+                                        is_active: user.user.is_active,
                                     }
                                 ).then(() => getUsers())
                             }
@@ -50,7 +52,7 @@ export const UserList = ({ loggedInUser }) => {
     const removeAdminButton = (user) => {
         return <>
             {
-                loggedInUser?.user
+                loggedInUser?.user?.is_staff
                     ? <button
                         onClick={
                             () => {
@@ -60,7 +62,7 @@ export const UserList = ({ loggedInUser }) => {
                                         bio: user.bio,
                                         profile_image_url: user.profile_image_url,
                                         is_staff: 0,
-                                        is_active: user.user.is_active
+                                        is_active: user.user.is_active,
                                     }
                                 ).then(() => getUsers())
                             }
@@ -104,15 +106,18 @@ export const UserList = ({ loggedInUser }) => {
                     ? <button
                         onClick={
                             () => {
-                                updateUser(
-                                    {
+                                if (window.confirm("Are you sure you want to deactivate this user?")) {
+                                    
+                                    updateUser(
+                                        {
                                         id: user.id,
                                         bio: user.bio,
                                         profile_image_url: user.profile_image_url,
                                         is_staff: user.user.is_staff,
                                         is_active: 0
                                     }
-                                ).then(() => getUsers())
+                                    ).then(() => getUsers())
+                                }
                             }
                         }>
                         Deactivate
@@ -123,50 +128,27 @@ export const UserList = ({ loggedInUser }) => {
 
     }
 
+    const activeUsers = users.filter(user => user.user.is_active === true)
+    const inactiveUsers = users.filter(user => user.user.is_active === false)
+
     return <>
-        <h1 className="title is-1 level-item">Active Users</h1>
         {
-            users?.map(user =>
-                <div className="my-4" key={`user--${user.id}`}>
-                    <div className="level">
-                        <div className="columns level-item">
-                            <div className="column is-7">
-                                <div className="card">
-                                    <div className="card-content">
-                                        <div className="media">
-                                            <div className="media-content">
-                                                <Link to={`${user.id}/details`}>
-                                                    <p className="title is-4">{user.full_name}</p>
-                                                </Link>
-                                                <div>
-                                                    <p className="subtitle is-6">@{user.user.username}</p>
-                                                    <p className="subtitle is-6">Admin:
-                                                        {
-                                                            user.user.is_staff
-                                                                ? " Yes"
-                                                                : " No"
-
-                                                        }</p>
-                                                </div>
-                                                {
-                                                    user.user.is_staff
-                                                        ? removeAdminButton(user)
-                                                        : makeAdminButton(user)
-                                                }
-                                                {
-                                                    user.user.is_active
-                                                        ? makeInactiveButton(user)
-                                                        : makeActiveButton(user)
-                                                }
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            loggedInUser?.user?.is_staff
+            ? <StaffUsers 
+            activeUsers={activeUsers}
+            inactiveUsers={inactiveUsers} 
+            removeAdminButton={removeAdminButton} 
+            makeAdminButton={makeAdminButton}
+            makeInactiveButton={makeInactiveButton}
+            makeActiveButton={makeActiveButton}/>
+            : <AuthorUsers 
+            activeUsers={activeUsers}
+            inactiveUsers={inactiveUsers} 
+            removeAdminButton={removeAdminButton} 
+            makeAdminButton={makeAdminButton}
+            makeInactiveButton={makeInactiveButton}
+            makeActiveButton={makeActiveButton}/>
+        }
+        
     </>
 }

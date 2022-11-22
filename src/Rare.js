@@ -15,11 +15,11 @@ export const Rare = () => {
   }
 
  useEffect(() => {
-  if (token) {
-    getAllUsers().then((usersFromAPI) => {
-      setUserState(usersFromAPI)
-    })
-  }
+    if (token) {
+      getAllUsers().then((usersFromAPI) => {
+        setUserState(usersFromAPI)
+      })
+    }
 }, [])
 
 const loggedInUser = users.find(user => user.tokenNumber === token)
